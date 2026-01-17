@@ -32,20 +32,19 @@
     ansible.builtin.debug:
       msg: "{{ ec2_output }}"
 
-  - name: print public_ip
-    ansible.builtin.debug: 
-      msg: "{{ item.instances[0].public_ip_address }}"
-    loop: "{{ ec2_output.results }}"
-    register: ec2_output_1
+  - name: set public & private ip facts
+  ansible.builtin.set_fact:
+    public_ip: "{{ item.instances[0].public_ip_address }}"
+    private_ip: "{{ item.instances[0].private_ip_address }}"
+  loop: "{{ ec2_output.results }}"
 
-    - name: print the ec2_output_1
-    ansible.builtin.debug:
-      msg: "{{ ec2_output_1 }}
+  - name: print public ip
+    debug:
+     msg: "{{ public_ip }}"
 
-  - name: print private_ip
-    ansible.builtin.debug: 
-      msg: "{{ item.instances[0].private_ip_address }}"
-    loop: "{{ ec2_output.results }}"
+  - name: print private ip
+    debug:
+     msg: "{{ private_ip }}"
 
   - name: create route53 record
     amazon.aws.route53:
