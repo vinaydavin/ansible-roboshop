@@ -38,11 +38,11 @@
     private_ip: "{{ item.instances[0].private_ip_address }}"
   loop: "{{ ec2_output.results }}"
 
-  - name: print public ip
+- name: print public ip
     debug:
      msg: "{{ public_ip }}"
 
-  - name: print private ip
+- name: print private ip
     debug:
      msg: "{{ private_ip }}"
 
@@ -51,7 +51,7 @@
       state: present
       zone: "{{ domain_name }}"
       record: "{{ item.item }}.{{ domain_name }}" # mongodb.daws86s.fun
-      type: A
+       type: A
       ttl: 1
       value: "{{ item.instances[0].private_ip_address }}"
       overwrite: true
