@@ -38,7 +38,7 @@
     loop: "{{ ec2_output.results }}"
     register: ec2_output1
 
-    - name: print the ec2_output
+    - name: print the ec2_output1
     ansible.builtin.debug:
       msg: "{{ ec2_output1 }}
 
