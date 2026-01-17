@@ -2,22 +2,28 @@
   hosts: local
   connection: local
   vars:
-    ami_id: ami-09c813fb71547fc4f
-    sg_id: sg-07c8acf3fa6b923fa # replace with your SG ID
-    zone_id: "Z0948150OFPSYTNVYZOY" # replace with your ID
-    domain_name: "daws86s.fun"
+    ami_id: ami-0220d79f3f480ecf5
+    subnet_id: subnet-04d4f1ebfd040d45e
+    sg_id: sg-05ff4bd44c0bc3ba5 
+    zone_id: "Z08339141ZNV0KWJ5D2UQ" 
+    domain_name: "vdavin.online"
+    key_name: "vdavin-pem"
     # we can pass instances through command line using -e
-    # instances: 
-    # - mongodb
+    instances: 
+    - mongodb
     # - redis
     # - mysql
     # - rabbitmq
   tasks:
-  - name: create ec2 instance
+  - name: create ec2 instance   # pip3.9 install botocore boto3
     amazon.aws.ec2_instance:
       name: "{{ item }}"
+      # key_name: "{{ key_name }}"
+      vpc_subnet_id: "{{ subnet_id }}"
       instance_type: t3.micro
       security_group: "{{ sg_id }}"
+      network_interfaces:
+        assign_public_ip: yes
       image_id: "{{ ami_id }}"
       tags:
         Name: "{{ item }}"
