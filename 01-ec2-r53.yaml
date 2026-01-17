@@ -22,8 +22,6 @@
       vpc_subnet_id: "{{ subnet_id }}"
       instance_type: t3.micro
       security_group: "{{ sg_id }}"
-      network_interfaces:
-        assign_public_ip: yes
       image_id: "{{ ami_id }}"
       tags:
         Name: "{{ item }}"
